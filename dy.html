@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全网热点瓜合集</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script>
+        // 配置Tailwind自定义颜色
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        neutral: '#64748B',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+
+        .parent-container {
+    display: flex;
+    justify-content: center; /* 水平方向居中 */
+  }
+  
+  .center-div {
+    background-color: #f0f0f0;
+    padding: 20px;
+  }
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+            }
+        }
+
+        
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans text-gray-800">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- 页面标题区域 -->
+        <header class="mb-8 text-center">
+            <h1 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-gray-900 mb-2 text-shadow">
+                全网热点瓜大全观看教程
+            </h1>
+
+        </header>
+
+        <!-- 主要内容卡片 -->
+        <main class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+
+            <!-- 文本内容区域 -->
+            <div class="p-6 md:p-8">
+                <div id="content-text" class="prose max-w-none mb-6">
+                    <p style="color: #ff284a;font-weight: bold; font-size: 25px;">
+                        一：最新热瓜合集
+                    </p>
+                    <p style="color: #283aff; font-size: 18px; margin-top: 3dvb;">
+                        越南屠夫,油江霸凌视频,快递员抹脖子,释永信方丈情人们视频曝光,武安银河御府上演现实版”三英战吕布武陟大瓜,"丹尼熊骚扰别人，网红文子和大叔，湖北经济学院的瓜，盘锦兴隆大厦黄金熊，潍坊摩天轮舌钉女，台州大G拍照事件，西藏马熊吃人，王小美展示卫x巾，台州小
+                        poor 千层老板娘，九号小g情侣，武汉硚口路cs事件，纹身女切手指，卷毛开飞机，周楚然塌方，新世纪广场吾悦广场，三中养尸，女孩虐猫，周二磊，精神母女等等..日更中
+                    </p>
+                    <p style="color: #ff284a;font-weight: bold; font-size: 25px; margin-top: 4dvb;">
+                        二：在线观看方法介绍
+                    </p>
+                    <p style=" color: #283aff; font-size: 18px; margin-top: 3dvb;">
+                        1.先打开"抖音极速版"(非抖音app)只有极速版才有吃瓜功能，没有的可以在应用商店下载一个
+                    </p>
+                    <p style=" color: #283aff; font-size: 18px; margin-top: 3dvb;">
+                        2.安装好“抖音极速版”登录后 点击右上角搜索框 🔍 “视频资源仓”关键词会跳转到我的私密作品集页面
+                    </p>
+
+                    <p style="text-align: center;  margin-top: 2dvb;">
+                        “视频资源仓”（私密作品集口令）
+                    </p>
+
+                    <div style="text-align: center;">
+                        <button id="copy-text" style="margin-top: 3dvb;"
+                            class="bg-primary text-white px-4 py-2 rounded-lg">
+                            <i class="fa fa-copy mr-2"></i> 复制私密作品集口令码
+                        </button>
+                    </div>
+
+
+                    <p style=" color: #283aff; font-size: 18px; margin-top: 3dvb;">
+                        3.私密作品集里面的吃瓜视频每天都会更新且支持保存到本地，建议讲视频保存本地防止和谐。
+                    </p>
+
+                    <!-- 图片显示区域 -->
+                    <div class="relative">
+                        <img style="margin: auto; padding-top: 2dvb;" id="main-image" src="images/dy1.png" alt="吃瓜">
+
+                    </div>
+
+
+                    <p style="color: #ff284a;font-weight: bold; font-size: 25px; margin-top: 4dvb;">
+                        4.温馨提示：由于某音最近审核较严，私密作品随时会被和谐，如果没有正常跳转不要着急，作者会尽快重新发布。
+                    </p>
+                </div>
+
+
+            </div>
+        </main>
+
+        <!-- 相关内容推荐 -->
+        <section class="mb-8">
+            <div class="flex items-center justify-center text-neutral space-x-4">
+                <span class="flex items-center">
+                    <i class="fa fa-eye mr-1"></i>
+                    <span id="view-count">0</span> 次查看
+                </span>
+                <span class="flex items-center">
+                    <i class="fa fa-calendar mr-1"></i>
+                    发布时间：2025年8月15日
+                </span>
+            </div>
+        </section>
+
+        <!-- 通知提示框 -->
+        <div id="notification"
+            class="fixed bottom-6 right-6 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 flex items-center">
+            <i id="notification-icon" class="fa fa-check-circle mr-2 text-secondary"></i>
+            <span id="notification-text">复制成功</span>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center text-gray-400 text-sm">
+            <p>© 2025 资源研究员 | 保留所有权利</p>
+        </div>
+    </footer>
+
+    <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function () {
+            // 元素引用
+            const viewCountElement = document.getElementById('view-count');
+            const copyTextButton = document.getElementById('copy-text');
+            const mainImage = document.getElementById('main-image');
+            const contentText = document.getElementById('content-text');
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+            const notificationIcon = document.getElementById('notification-icon');
+
+            // 初始化点击量 - 从localStorage获取，若无则初始化为0
+            let viewCount = localStorage.getItem('pageViewCount') || 0;
+            // 每次页面加载点击量+1
+            viewCount = parseInt(viewCount) + 1;
+            // 更新显示并保存到localStorage
+            viewCountElement.textContent = viewCount;
+            localStorage.setItem('pageViewCount', viewCount);
+
+            // 复制文本内容功能
+            copyTextButton.addEventListener('click', function () {
+                // 获取文本内容
+                const textToCopy = contentText.textContent;
+
+                // 复制到剪贴板
+                navigator.clipboard.writeText("视频资源仓").then(function () {
+                    showNotification('文本内容已复制到剪贴板', 'check-circle', 'secondary');
+                }).catch(function () {
+                    showNotification('复制失败，请手动复制', 'exclamation-circle', 'red-500');
+                });
+            });
+
+
+
+            // 显示通知提示
+            function showNotification(message, icon, color) {
+                notificationText.textContent = message;
+                notificationIcon.className = `fa fa-${icon} mr-2 text-${color}`;
+
+                // 显示通知
+                notification.classList.remove('translate-y-20', 'opacity-0');
+                notification.classList.add('translate-y-0', 'opacity-100');
+
+                // 3秒后隐藏通知
+                setTimeout(function () {
+                    notification.classList.remove('translate-y-0', 'opacity-100');
+                    notification.classList.add('translate-y-20', 'opacity-0');
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+
+</html>
