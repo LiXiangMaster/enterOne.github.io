@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全网热点瓜合集</title>
+    <title>欧日韩电影/奇闻异事</title>
     <!-- 引入Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入Font Awesome -->
@@ -60,7 +60,7 @@
         <!-- 页面标题区域 -->
         <header class="mb-8 text-center">
             <h1 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-gray-900 mb-2 text-shadow">
-                全网短剧资源合集
+                欧日韩电影/趣闻轶事
             </h1>
 
         </header>
@@ -72,22 +72,26 @@
             <div class="p-6 md:p-8">
                 <div id="content-text" class="prose max-w-none mb-6">
                     <p style="color: #ff284a;font-weight: bold; font-size: 25px;">
-                        一、最新热瓜合集
+                        一、欧日韩电影合集
                     </p>
-                    <p style="color: #283aff; font-size: 18px; margin-top: 3dvb;">
-                        美猴王、以和为贵、数字心跳：未来制造局、龙行龘龘、欢喜一家人 3 爱在一起、欢喜一家人 3 爱在一起、狸猫书生、明月引、心动千年、皇妃她不讲武德、点石成金
+                    <p id="ourihanMovie" style="color: #283aff; font-size: 18px; margin-top: 2dvb;"> </p>
+
+                    <p style="color: #ff284a;font-weight: bold; font-size: 25px; margin-top: 3dvb;">
+                        二、国内热点新闻/奇闻趣事
                     </p>
+                    <p id="redianNews" style="color: #283aff; font-size: 18px; margin-top: 2dvb;"> </p>
+
                     <p style="color: #ff284a;font-weight: bold; font-size: 25px; margin-top: 4dvb;">
-                        二、在线观看方法介绍
+                        三、在线观看方法介绍
                     </p>
                     <p style=" color: #283aff; font-size: 18px; margin-top: 3dvb;">
-                        1.先打开"抖音极速版"(非抖音app)只有极速版才有的免费功能，没有的可以在应用商店下载一个
+                        1.先打开"抖音极速版"(非抖音app)只有极速版才有的私密分享功能，没有的可以在应用商店下载一个
                     </p>
                     <p style=" color: #283aff; font-size: 18px; margin-top: 3dvb;">
                         2.安装好“抖音极速版”登录后 点击右上角搜索框 🔍 “视频资源仓”关键词会跳转到我的私密作品集页面
                     </p>
 
-                    <p style="text-align: center;  margin-top: 2dvb;">
+                    <p style="color: #ff284a;text-align: center;  margin-top: 2dvb;">
                         “视频资源仓”（私密作品集口令）
                     </p>
 
@@ -100,18 +104,18 @@
 
 
                     <p style=" color: #283aff; font-size: 18px; margin-top: 3dvb;">
-                        三、私密作品集里面的短剧视频每天都会更新且支持保存到本地，建议讲视频保存本地防止和谐。
+                        3、私密作品集里面的视频和影视资源每天都会更新且支持保存到本地，建议将视频保存本地可长期查看。
                     </p>
 
                     <!-- 图片显示区域 -->
-                    <!-- <div class="relative">
-                        <img style="margin: auto; padding-top: 2dvb;" id="main-image" src="images/dy1.png" alt="吃瓜">
+                    <div class="relative">
+                        <img style="margin: auto; padding-top: 2dvb;" id="main-image" src="images/dy.png" alt="热点">
 
-                    </div> -->
+                    </div>
 
 
                     <p style="color: #ff284a;font-weight: bold; font-size: 25px; margin-top: 4dvb;">
-                        三、温馨提示：由于版权问题最近dy审核较严，私密作品随时会被和谐，如果没有正常跳转不要着急，作者会尽快重新发布。
+                        三、温馨提示：由于尺度问题最近dy审核较严，私密作品随时会被和谐，如果没有正常跳转不要着急，作者会尽快重新发布。
                     </p>
                 </div>
 
@@ -154,6 +158,22 @@
     <script>
         // 页面加载完成后执行
         document.addEventListener('DOMContentLoaded', function () {
+            // 欧日韩电影
+            const OU_RI_HAN_MOVIE = "酒店服务生、 初恋时间、西贡日落、扭曲的爱、高压监狱三部曲、灭火宝贝、法国空姐、军舰上的女兵、急救护士、人猿泰山、私人家教、、斗罗大陆之剑道尘心、夏日搭车客、捷客街头搭讪系列、乐可、血十字、黑鹰坠落、 等等…";
+            // 热点新闻
+            const REDIAN_NEWS_MOVIE = "越南屠夫,油江霸凌视频,快递员抹脖子,释永信,武安银河御府上演现实版,三英战吕布武陟大瓜,丹尼熊骚扰别人，网红文子和大叔，湖北经济学院，盘锦兴隆大厦黄金熊，潍坊摩天轮舌钉女，台州大G拍照事件，西藏马熊吃人，王小美展示卫x巾,千层老板娘，九号小g情侣，武汉硚口路cs事件，纹身女x手指，卷毛开飞机,周楚然塌方，新世纪广场吾悦广场，三中养尸，女孩虐猫，周二磊，精神母女等等..日更中"
+            // 获取p标签元素
+            const ourihanMovieDisplayElement = document.getElementById("ourihanMovie");
+
+
+            ourihanMovieDisplayElement.textContent = `电影名称: ${OU_RI_HAN_MOVIE}`;
+
+            const redianNewsDisplayElement = document.getElementById("redianNews");
+
+            redianNewsDisplayElement.textContent = `🍉: ${REDIAN_NEWS_MOVIE}`;
+
+
+
             // 元素引用
             const viewCountElement = document.getElementById('view-count');
             const copyTextButton = document.getElementById('copy-text');
