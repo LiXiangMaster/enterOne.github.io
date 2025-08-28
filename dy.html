@@ -139,8 +139,8 @@
                     <!-- <span id="busuanzi_value_site_uv"></span> 次查看 -->
                 </span>
                 <span class="flex items-center">
-                    <i class="fa fa-calendar mr-1"></i>
-                    发布时间：2025年8月15日
+                    发布时间： <i id="currentDate" class="fa fa-calendar mr-1"></i>
+
                 </span>
             </div>
         </section>
@@ -198,6 +198,22 @@
             // 更新显示并保存到localStorage
             // viewCountElement.textContent = viewCount;
             localStorage.setItem('pageViewCount', viewCount);
+
+
+            const today = new Date();
+
+            // 提取年、月、日
+            const year = today.getFullYear();
+            // 月份从0开始，所以需要加1
+            const month = today.getMonth() + 1;
+            const day = today.getDate();
+
+            // 格式化为YYYY-M-D格式
+            const formattedDate = `${year}-${month}-${day}`;
+
+            // 显示在页面上
+            document.getElementById('currentDate').textContent = formattedDate;
+
 
             // 复制文本内容功能
             copyTextButton.addEventListener('click', function () {
