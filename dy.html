@@ -135,8 +135,7 @@
                 <span class="flex items-center">
                     <i class="fa fa-eye mr-1"></i>
                     <p> <span id="busuanzi_value_site_uv"></span> 人</p>
-                    <!-- <span id="view-count">0</span> 次查看 -->
-                    <!-- <span id="busuanzi_value_site_uv"></span> 次查看 -->
+
                 </span>
                 <span class="flex items-center">
                     发布时间： <i id="currentDate" class="fa fa-calendar mr-1"></i>
@@ -190,14 +189,6 @@
             const notification = document.getElementById('notification');
             const notificationText = document.getElementById('notification-text');
             const notificationIcon = document.getElementById('notification-icon');
-
-            // 初始化点击量 - 从localStorage获取，若无则初始化为0
-            let viewCount = localStorage.getItem('pageViewCount') || 0;
-            // 每次页面加载点击量+1
-            viewCount = parseInt(viewCount) + 1;
-            // 更新显示并保存到localStorage
-            // viewCountElement.textContent = viewCount;
-            localStorage.setItem('pageViewCount', viewCount);
 
 
             const today = new Date();

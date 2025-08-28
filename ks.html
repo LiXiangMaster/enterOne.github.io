@@ -9,6 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入Font Awesome -->
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
     <script>
         // 配置Tailwind自定义颜色
@@ -138,11 +139,10 @@
             <div class="flex items-center justify-center text-neutral space-x-4">
                 <span class="flex items-center">
                     <i class="fa fa-eye mr-1"></i>
-                    <span id="view-count">0</span> 次查看
+                    <p> <span id="busuanzi_value_site_uv"></span> 人</p>
                 </span>
                 <span class="flex items-center">
-                    <i class="fa fa-calendar mr-1"></i>
-                    发布时间：2025年8月15日
+                    发布时间： <i id="currentDate" class="fa fa-calendar mr-1"></i>
                 </span>
             </div>
         </section>
@@ -179,13 +179,21 @@
             const notificationText = document.getElementById('notification-text');
             const notificationIcon = document.getElementById('notification-icon');
 
-            // 初始化点击量 - 从localStorage获取，若无则初始化为0
-            let viewCount = localStorage.getItem('pageViewCount') || 0;
-            // 每次页面加载点击量+1
-            viewCount = parseInt(viewCount) + 1;
-            // 更新显示并保存到localStorage
-            viewCountElement.textContent = viewCount;
-            localStorage.setItem('pageViewCount', viewCount);
+
+
+            const today = new Date();
+
+            // 提取年、月、日
+            const year = today.getFullYear();
+            // 月份从0开始，所以需要加1
+            const month = today.getMonth() + 1;
+            const day = today.getDate();
+
+            // 格式化为YYYY-M-D格式
+            const formattedDate = `${year}-${month}-${day}`;
+
+            // 显示在页面上
+            document.getElementById('currentDate').textContent = formattedDate;
 
             // 复制文本内容功能
             copyTextButton.addEventListener('click', function () {
