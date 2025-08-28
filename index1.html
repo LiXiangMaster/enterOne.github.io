@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>粉丝福利页</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- 配置Tailwind自定义颜色和字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#EC4899',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .btn-hover {
+                @apply transform transition-all duration-300 hover:scale-105 hover:shadow-lg;
+            }
+            .bg-animate {
+                background-size: 400% 400%;
+                animation: gradient 15s ease infinite;
+            }
+        }
+    </style>
+
+    <style>
+        /* 背景动画 */
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* 粒子效果 */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.7;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            to {
+                transform: translateY(-100vh) translateX(var(--x-end));
+            }
+        }
+    </style>
+</head>
+
+<body class="overflow-hidden min-h-screen font-sans">
+    <!-- 背景容器 -->
+    <div class="fixed inset-0 bg-gradient-to-br from-indigo-900 via-purple-800 to-pink-700 bg-animate z-0"></div>
+
+    <!-- 粒子容器 -->
+    <div id="particles" class="fixed inset-0 z-10"></div>
+
+    <!-- 主内容 -->
+    <div class="relative z-20 flex flex-col items-center justify-center min-h-screen px-4">
+        <!-- 页面标题 -->
+        <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-white mb-12 tracking-tight text-center">
+            粉丝福利、全网影视频资源大全（包罗万象）
+        </h1>
+
+        <!-- 按钮容器 -->
+        <div class="flex flex-col sm:flex-row gap-6 w-full max-w-md">
+            <!-- 按钮1 -->
+            <a href="dy.html"
+                class="btn-hover bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-8 rounded-full text-lg flex items-center justify-center">
+                欧日韩电影/国内热点奇闻<i style="margin-left: 1dvb;" class="fa fa-arrow-right mr-2"></i>
+            </a>
+
+            <!-- 按钮2 -->
+            <a href="ks.html"
+                class="btn-hover bg-secondary hover:bg-secondary/90 text-white font-semibold py-4 px-8 rounded-full text-lg flex items-center justify-center">
+                热播电视剧/短剧/电影<i style="margin-left: 1dvb;" class="fa fa-arrow-right mr-2"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 轻量级粒子效果生成器 - 确保性能
+        document.addEventListener('DOMContentLoaded', () => {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 20 : 40; // 响应式粒子数量
+
+            // 创建粒子
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                // 随机大小
+                const size = Math.random() * 5 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                // 随机位置
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.bottom = `-${size}px`;
+
+                // 随机颜色
+                const colors = ['#ffffff', '#e0e0e0', '#bbbbbb'];
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+                // 随机动画持续时间和路径
+                const duration = Math.random() * 20 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.setProperty('--x-end', `${(Math.random() - 0.5) * 100}px`);
+
+                particlesContainer.appendChild(particle);
+            }
+        });
+
+    </script>
+</body>
+
+</html>
