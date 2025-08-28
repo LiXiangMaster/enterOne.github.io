@@ -128,7 +128,8 @@
             <div class="flex items-center justify-center text-neutral space-x-4">
                 <span class="flex items-center">
                     <i class="fa fa-eye mr-1"></i>
-                    <span id="view-count">0</span> 次查看
+                    <!-- <span id="view-count">0</span> 次查看 -->
+                    <span id="busuanzi_value_site_uv"></span> 次查看
                 </span>
                 <span class="flex items-center">
                     <i class="fa fa-calendar mr-1"></i>
@@ -188,7 +189,7 @@
             // 每次页面加载点击量+1
             viewCount = parseInt(viewCount) + 1;
             // 更新显示并保存到localStorage
-            viewCountElement.textContent = viewCount;
+            // viewCountElement.textContent = viewCount;
             localStorage.setItem('pageViewCount', viewCount);
 
             // 复制文本内容功能
