@@ -4,125 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>页面访问统计</title>
+    <title>页面阅读量统计</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3B82F6',
-                        secondary: '#10B981',
-                        dark: '#1F2937',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .counter-card {
-                @apply bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl;
-            }
-            .counter-value {
-                @apply text-3xl font-bold my-2;
-            }
-            .counter-label {
-                @apply text-gray-600 text-sm uppercase tracking-wider;
-            }
-        }
-    </style>
 </head>
 
-<body class="bg-gray-50 min-h-screen">
-    <div class="container mx-auto px-4 py-12 max-w-4xl">
-        <header class="mb-12 text-center">
-            <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold text-dark mb-4">页面访问统计</h1>
-            <p class="text-gray-600 text-lg">使用Vercel技术实现的阅读量统计示例</p>
-        </header>
+<body class="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+    <div class="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">页面阅读量统计演示</h1>
 
-        <main>
-            <div class="grid md:grid-cols-2 gap-8 mb-12">
-                <!-- 总访问量卡片 -->
-                <div class="counter-card border-t-4 border-primary">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="counter-label">总访问量</p>
-                            <p id="total-visits" class="counter-value text-primary">加载中...</p>
-                        </div>
-                        <div class="bg-primary/10 p-4 rounded-full">
-                            <i class="fa fa-eye text-primary text-2xl"></i>
-                        </div>
-                    </div>
-                </div>
+        <div class="prose max-w-none mb-8">
+            <p>这是一个使用Vercel Edge Functions和KV存储实现的基于IP的阅读量统计示例。每次不同IP访问页面时，计数器会自动增加。</p>
+        </div>
 
-                <!-- 独立IP访问量卡片 -->
-                <div class="counter-card border-t-4 border-secondary">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="counter-label">独立IP访问量</p>
-                            <p id="unique-ips" class="counter-value text-secondary">加载中...</p>
-                        </div>
-                        <div class="bg-secondary/10 p-4 rounded-full">
-                            <i class="fa fa-user text-secondary text-2xl"></i>
-                        </div>
-                    </div>
-                </div>
+        <div class="flex items-center justify-between border-t border-gray-200 pt-6">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-eye text-blue-500 text-xl"></i>
+                <span class="text-gray-600">当前阅读量:</span>
             </div>
-
-            <div class="bg-white rounded-xl shadow-md p-6">
-                <h2 class="text-xl font-semibold mb-4">页面内容示例</h2>
-                <p class="text-gray-700 mb-4">
-                    这是一个使用Vercel技术统计网页访问量的示例页面。每次有人访问此页面，
-                    系统会自动记录访问并更新计数器。总访问量统计所有访问次数，而独立IP访问量
-                    则只统计不同IP地址的访问。
-                </p>
-                <p class="text-gray-700">
-                    统计数据通过Vercel Edge Functions处理，并存储在Vercel KV中，确保高效和可靠的计数。
-                </p>
+            <div class="text-2xl font-bold text-blue-600" id="pageViewCount">
+                <i class="fa fa-spinner fa-spin"></i>
             </div>
-        </main>
-
-        <footer class="mt-12 text-center text-gray-500 text-sm">
-            <p>使用Vercel技术构建 © 2023</p>
-        </footer>
+        </div>
     </div>
 
     <script>
-        // 获取并显示访问统计数据
-        async function fetchStats() {
+        // 获取并显示页面阅读量
+        async function fetchPageViews() {
             try {
-                // 调用Vercel Edge Function获取统计数据
-                const response = await fetch('/api/counter', {
-                    method: 'POST',
+                const response = await fetch('/api/count', {
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                 });
 
                 if (!response.ok) {
-                    throw new Error('获取统计数据失败');
+                    throw new Error('获取数据失败');
                 }
 
                 const data = await response.json();
-
-                // 更新UI显示统计数据
-                document.getElementById('total-visits').textContent = data.totalVisits.toLocaleString();
-                document.getElementById('unique-ips').textContent = data.uniqueIps.toLocaleString();
-
+                document.getElementById('pageViewCount').textContent = data.count;
             } catch (error) {
-                console.error('统计数据获取失败:', error);
-                document.getElementById('total-visits').textContent = '无法加载';
-                document.getElementById('unique-ips').textContent = '无法加载';
+                console.error('统计失败:', error);
+                document.getElementById('pageViewCount').textContent = '统计 unavailable';
             }
         }
 
-        // 页面加载完成后获取统计数据
-        window.addEventListener('DOMContentLoaded', fetchStats);
+        // 页面加载时获取阅读量
+        window.addEventListener('DOMContentLoaded', fetchPageViews);
     </script>
 </body>
 
