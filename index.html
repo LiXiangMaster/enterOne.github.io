@@ -1,29 +1,30 @@
-<!-- 在需要显示计数的位置添加 -->
-<p>总访问次数: <span id="totalClicks">0</span></p>
-<p>独立访客: <span id="uniqueVisitors">0</span></p>
+<!-- 在页面中你想显示统计的位置添加 -->
+<div class="stats">
+    <p>总访问量: <span id="totalVisits">0</span></p>
+    <p>今日访问: <span id="todayVisits">0</span></p>
+</div>
 
 <script>
-    // 替换为你的命名空间（如github用户名）和计数器名称
-    const namespace = "lixiang";
-    const counterName = "github1";
+    // 替换为你的GoatCounter站点ID（如：your-site-id.goatcounter.com中的your-site-id）
+    const siteId = "你的站点ID";
 
-    // 获取总点击数
-    fetch(`https://api.countapi.xyz/hit/${namespace}/${counterName}`)
+    // 获取总访问量
+    fetch(`https://${siteId}.goatcounter.com/api/v0/count?format=json&limit=1`)
         .then(res => res.json())
         .then(data => {
-            document.getElementById("totalClicks").textContent = data.value;
+            // 显示总访问量
+            document.getElementById("totalVisits").textContent = data.total;
         });
 
-    // 获取独立访客数（基于IP+设备指纹）
-    fetch(`https://api.countapi.xyz/get/${namespace}/${counterName}_unique`)
+    // 获取今日访问量（计算今天的日期范围）
+    const today = new Date();
+    const startOfDay = new Date(today.setHours(0, 0, 0, 0)).toISOString();
+    const endOfDay = new Date(today.setHours(23, 59, 59, 999)).toISOString();
+
+    fetch(`https://${siteId}.goatcounter.com/api/v0/count?format=json&from=${startOfDay}&to=${endOfDay}`)
         .then(res => res.json())
         .then(data => {
-            // 首次访问时增加独立计数
-            if (data.value === null) {
-                fetch(`https://api.countapi.xyz/set/${namespace}/${counterName}_unique?value=1`);
-                document.getElementById("uniqueVisitors").textContent = 1;
-            } else {
-                document.getElementById("uniqueVisitors").textContent = data.value;
-            }
+            // 显示今日访问量
+            document.getElementById("todayVisits").textContent = data.total;
         });
 </script>
