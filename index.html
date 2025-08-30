@@ -1,21 +1,308 @@
-<!-- 在页面中需要显示统计的位置添加 -->
-<div class="stats-container">
-    <!-- 网站总访问量 -->
-    <p>网站总访问量：<span id="vercount_value_site_pv">0</span></p>
+<!DOCTYPE html>
+<html lang="zh-CN">
 
-    <!-- 网站独立访客数（按设备/IP区分） -->
-    <p>网站总访客数：<span id="vercount_value_site_uv">0</span></p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网站访问统计 | Vercount</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <!-- 当前页面的阅读量 -->
-    <p>本文阅读量：<span id="vercount_value_page_pv">0</span></p>
-</div>
+    <!-- 配置Tailwind自定义主题 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#1E293B',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
 
-<style>
-    .stats-container {
-        margin: 20px 0;
-        padding: 10px;
-        border: 1px solid #eee;
-        border-radius: 4px;
-        color: #666;
-    }
-</style>
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .stat-card {
+                @apply bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+            }
+            .stat-number {
+                @apply text-4xl font-bold my-2;
+            }
+            .stat-label {
+                @apply text-gray-500 font-medium;
+            }
+            .stat-icon {
+                @apply text-2xl p-3 rounded-full bg-primary/10 text-primary;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-inter text-dark min-h-screen">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-md fixed w-full top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-bar-chart text-primary text-2xl"></i>
+                <span class="font-bold text-xl">Vercount 统计</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="hover:text-primary transition-colors">首页</a>
+                <a href="#" class="hover:text-primary transition-colors">统计详情</a>
+                <a href="#" class="hover:text-primary transition-colors">帮助文档</a>
+            </div>
+            <button class="md:hidden text-dark text-xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="container mx-auto px-4 pt-24 pb-16">
+        <!-- 页面标题 -->
+        <div class="text-center mb-12">
+            <h1 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">网站访问统计</h1>
+            <p class="text-gray-600 max-w-2xl mx-auto text-lg">使用Vercount技术实时监控您的网站访问数据，包括总点击量和独立IP访问数</p>
+        </div>
+
+        <!-- 统计卡片 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <!-- 总点击量卡片 -->
+            <div class="stat-card">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <div class="stat-label">总点击量</div>
+                        <div class="stat-number" id="total-hits">加载中...</div>
+                        <div class="text-sm text-gray-500 mt-2">
+                            <span class="text-secondary flex items-center">
+                                <i class="fa fa-arrow-up mr-1"></i> 12.5% 较昨日
+                            </span>
+                        </div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fa fa-mouse-pointer"></i>
+                    </div>
+                </div>
+                <div class="mt-6 h-12 bg-gray-100 rounded-lg overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-primary to-blue-400" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <!-- 独立IP数卡片 -->
+            <div class="stat-card">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <div class="stat-label">独立IP访问数</div>
+                        <div class="stat-number" id="unique-ips">加载中...</div>
+                        <div class="text-sm text-gray-500 mt-2">
+                            <span class="text-secondary flex items-center">
+                                <i class="fa fa-arrow-up mr-1"></i> 8.2% 较昨日
+                            </span>
+                        </div>
+                    </div>
+                    <div class="stat-icon bg-secondary/10 text-secondary">
+                        <i class="fa fa-globe"></i>
+                    </div>
+                </div>
+                <div class="mt-6 h-12 bg-gray-100 rounded-lg overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-secondary to-green-400" style="width: 62%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 访问趋势图表 -->
+        <div class="mt-12 max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-bold mb-6">访问趋势 (过去7天)</h2>
+            <div class="h-64">
+                <canvas id="visits-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- Vercount 信息 -->
+        <div class="mt-12 max-w-4xl mx-auto bg-primary/5 rounded-xl p-6 border border-primary/20">
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fa fa-info-circle text-primary mr-2"></i>
+                关于 Vercount
+            </h2>
+            <p class="text-gray-700 mb-4">
+                Vercount 是一个轻量级的网站访问统计工具，可轻松集成到任何网页中，无需复杂配置。
+                它可以帮助您跟踪网站的访问量、独立IP数等关键指标，为您的网站运营提供数据支持。
+            </p>
+            <div class="flex flex-wrap gap-4 mt-4">
+                <a href="https://vercount.vercel.app" target="_blank"
+                    class="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                    <i class="fa fa-external-link mr-2"></i> 访问 Vercount 官网
+                </a>
+                <a href="https://vercount.vercel.app/docs" target="_blank"
+                    class="inline-flex items-center px-4 py-2 bg-white text-primary border border-primary rounded-lg hover:bg-gray-50 transition-colors">
+                    <i class="fa fa-book mr-2"></i> 查看文档
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <i class="fa fa-bar-chart text-primary text-xl"></i>
+                        <span class="font-bold text-lg">Vercount 统计</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">轻量级网站访问统计解决方案</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-linkedin text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
+                &copy; 2023 Vercount. 保留所有权利。
+            </div>
+        </div>
+    </footer>
+
+    <!-- 引入Chart.js用于图表展示 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+
+    <!-- Vercount 统计脚本 -->
+    <script>
+        // Vercount 配置
+        const VERCOUNT_API_URL = 'https://api.vercount.vercel.app';
+        const SITE_ID = 'your-site-id'; // 替换为您的网站ID
+
+        // 获取并显示统计数据
+        async function fetchAndDisplayStats() {
+            try {
+                // 获取总点击量
+                const hitsResponse = await fetch(`${VERCOUNT_API_URL}/hits/${SITE_ID}`);
+                const hitsData = await hitsResponse.json();
+                document.getElementById('total-hits').textContent = hitsData.hits.toLocaleString();
+
+                // 获取独立IP数
+                const ipsResponse = await fetch(`${VERCOUNT_API_URL}/unique-ips/${SITE_ID}`);
+                const ipsData = await ipsResponse.json();
+                document.getElementById('unique-ips').textContent = ipsData.ips.toLocaleString();
+
+                // 获取7天趋势数据
+                const trendResponse = await fetch(`${VERCOUNT_API_URL}/trend/${SITE_ID}?days=7`);
+                const trendData = await trendResponse.json();
+
+                // 绘制图表
+                drawTrendChart(trendData);
+
+            } catch (error) {
+                console.error('获取统计数据失败:', error);
+                document.getElementById('total-hits').textContent = '获取失败';
+                document.getElementById('unique-ips').textContent = '获取失败';
+            }
+        }
+
+        // 绘制趋势图表
+        function drawTrendChart(data) {
+            const ctx = document.getElementById('visits-chart').getContext('2d');
+
+            // 准备图表数据
+            const labels = data.dates.map(date => {
+                const d = new Date(date);
+                return `${d.getMonth() + 1}/${d.getDate()}`;
+            });
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '点击量',
+                            data: data.hits,
+                            borderColor: '#3B82F6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: '独立IP',
+                            data: data.ips,
+                            borderColor: '#10B981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+        }
+
+        // 页面加载完成后获取统计数据
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchAndDisplayStats();
+
+            // 导航栏滚动效果
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 10) {
+                    nav.classList.add('py-2', 'shadow-lg');
+                    nav.classList.remove('py-3', 'shadow-md');
+                } else {
+                    nav.classList.add('py-3', 'shadow-md');
+                    nav.classList.remove('py-2', 'shadow-lg');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
