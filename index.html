@@ -1,33 +1,21 @@
-<!-- 在页面中你想显示统计的位置添加 -->
-<div class="stats">
-    <p>总访问量: <span id="totalVisits">0</span></p>
-    <p>今日访问: <span id="todayVisits">0</span></p>
+<!-- 在页面中需要显示统计的位置添加 -->
+<div class="stats-container">
+    <!-- 网站总访问量 -->
+    <p>网站总访问量：<span id="vercount_value_site_pv">0</span></p>
+
+    <!-- 网站独立访客数（按设备/IP区分） -->
+    <p>网站总访客数：<span id="vercount_value_site_uv">0</span></p>
+
+    <!-- 当前页面的阅读量 -->
+    <p>本文阅读量：<span id="vercount_value_page_pv">0</span></p>
 </div>
 
-<script data-goatcounter="https://lixiang.goatcounter.com/count" 异步 src="//gc.zgo.at/count.js"></script>
-
-<script>
-    // 替换为你的GoatCounter站点ID（如：your-site-id.goatcounter.com中的your-site-id）
-    const siteId = "lixiang";
-
-
-    // 获取总访问量
-    fetch(`https://${siteId}.goatcounter.com/api/v0/count?format=json&limit=1`)
-        .then(res => res.json())
-        .then(data => {
-            // 显示总访问量
-            document.getElementById("totalVisits").textContent = data.total;
-        });
-
-    // 获取今日访问量（计算今天的日期范围）
-    const today = new Date();
-    const startOfDay = new Date(today.setHours(0, 0, 0, 0)).toISOString();
-    const endOfDay = new Date(today.setHours(23, 59, 59, 999)).toISOString();
-
-    fetch(`https://${siteId}.goatcounter.com/api/v0/count?format=json&from=${startOfDay}&to=${endOfDay}`)
-        .then(res => res.json())
-        .then(data => {
-            // 显示今日访问量
-            document.getElementById("todayVisits").textContent = data.total;
-        });
-</script>
+<style>
+    .stats-container {
+        margin: 20px 0;
+        padding: 10px;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        color: #666;
+    }
+</style>
